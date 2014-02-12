@@ -48,6 +48,16 @@ class graph{
 						
 			return -1;
 		}
+		void display()
+		{
+			for(int i=0;i<=vertexcount;i++)
+			{
+				for(int j=0;j<vertexcount;j++)
+					cout<<adjmatrix[i][j]<<"  "; 
+			cout<<endl;
+			}
+			
+		}	
 		void dfs(){
 			vertexlist[0].visited=true;
 			displayvertex(0);
@@ -65,40 +75,29 @@ class graph{
 					thestack.push(v);
 				}
 			}
-			for(int j=0;j<vertexcount;j++)
-				vertexlist[j].visited=false;
-		}
-		void bfs(){
-			vertexlist[0].visited=true;
-			displayvertex(0);
-			thequeue.push(0);
-			while(!thequeue.empty()){
-				//get an unvisited verttex
-				int v=getunvisitedvertex(thequeue.pop());
-				if(v==-1)
-				{
-					thequeue.pop();
-				}	
-				else {
-					vertexlist[v].visited= true;
-					displayvertex(v);
-					thestack.push(v);
-				}
-			}
-			for(int j=0;j<vertexcount;j++)
+			for(int j=0;j<=vertexcount;j++)
 				vertexlist[j].visited=false;
 		}
 
-
-		void adj()
+	void bfs()
+	{
+		vertexlist[0].visited=true;
+		displayvertex(0);
+		thequeue.push(0);
+		int v2;
+		while(!thequeue.empty())
 		{
-			for(int i=0;i<=vertexcount;i++){
-				for(int j=0;j<=vertexcount;j++)
-					cout<<adjmatrix[i][j]<<"  ";
-				cout<<endl;
+			int v1=thequeue.front();
+			thequeue.pop();
+			while((v2=getunvisitedvertex(v1))!=-1)
+			{
+				vertexlist[v2].visited=true;
+				displayvertex(v2);
+				thequeue.push(v2);
 			}
-					
 		}
+		
+	}
 };
 
 int main(){
@@ -107,19 +106,24 @@ int main(){
 	g.addvertex('b');
 	g.addvertex('c');
 	g.addvertex('d');
+	g.addvertex('h');
 	g.addvertex('e');
 	g.addvertex('f');
 	g.addvertex('g');
-	g.addvertex('h');
 	g.addedge(0,1);
 	g.addedge(1,2);
 	g.addedge(2,3);
 	g.addedge(1,4);
 	g.addedge(2,5);
 	g.addedge(5,6);
-	g.addedge(6,7);	
-	g.addedge(6,8);
+	g.addedge(5,7);	
+	g.addedge(4,5);
+//
+	g.display();
+	cout<<"dfs:"<<endl;
 	g.dfs();
+	cout<<endl<<"bfs"<<endl;
+	g.bfs();
 	return 0;
 }
 
